@@ -1,50 +1,40 @@
-// Paquete: controller
 package com.aluracursos.desafio.LiteraluraX.controller;
 
 import com.aluracursos.desafio.LiteraluraX.model.Author;
 import com.aluracursos.desafio.LiteraluraX.service.AuthorService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController // Indica que esta clase es un controlador REST
-@RequestMapping("/api/authors") // Define la URL base para las rutas de este controlador
+@RestController
+@RequestMapping("/authors")
 public class AuthorController {
 
     private final AuthorService authorService;
 
-    // Inyección de dependencia del servicio de autores
+    // Constructor para inyectar el servicio
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
-    // Endpoint para obtener todos los autores
+    /**
+     * Endpoint para obtener todos los autores.
+     *
+     * @return Lista de autores.
+     */
     @GetMapping
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        List<Author> authors = authorService.getAllAuthors();
-        return ResponseEntity.ok(authors);
+    public List<Author> getAllAuthors() {
+        return authorService.getAllAuthors(); // Llama al servicio
     }
 
-    // Endpoint para obtener un autor por su ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
-        Optional<Author> author = authorService.getAuthorById(id);
-        return author.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-
-    // Endpoint para crear un nuevo autor
+    /**
+     * Endpoint para guardar un autor.
+     *
+     * @param author Objeto Author enviado en el cuerpo de la solicitud.
+     * @return Autor guardado.
+     */
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
-        Author savedAuthor = authorService.saveAuthor(author);
-        return ResponseEntity.ok(savedAuthor);
-    }
-
-    // Endpoint para eliminar un autor por su ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAuthorById(@PathVariable Long id) {
-        authorService.deleteAuthorById(id);
-        return ResponseEntity.noContent().build();
+    public Author saveAuthor(@RequestBody Author author) {
+        return authorService.saveAuthor(author); // Llama al servicio
     }
 }
