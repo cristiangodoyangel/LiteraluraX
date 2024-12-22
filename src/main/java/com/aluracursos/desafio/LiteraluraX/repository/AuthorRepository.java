@@ -7,6 +7,6 @@ import java.util.List; // Importa List.
 
 public interface AuthorRepository extends JpaRepository<Author, Long> { // Extiende JpaRepository para manejar la entidad Author.
 
-    // Método personalizado para buscar autores vivos en un año específico.
+
     List<Author> findByBirthYearLessThanEqualAndDeathYearGreaterThanEqual(int year1, int year2);
 }
