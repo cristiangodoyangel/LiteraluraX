@@ -1,36 +1,28 @@
-package com.aluracursos.desafio.LiteraluraX.model; // Especifica el paquete al que pertenece esta clase.
+package com.aluracursos.desafio.LiteraluraX.model;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
-@Entity // Indica que esta clase es una entidad de JPA y estará mapeada a una tabla de la base de datos.
+
+@Entity
 public class Book {
 
-    @Id // Marca este campo como la clave primaria.
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Genera el valor automáticamente para la clave primaria.
-    private Long id; // Identificador único del libro.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String title; // Título del libro.
+    private String title;
+    private String language;
 
-    private String language; // Idioma principal del libro.
+    @Column(name = "download_count")
+    private int downloadCount;
 
-    @Column(name = "download_count") // Especifica el nombre de la columna en la base de datos.
-    private int downloadCount; // Cantidad de descargas del libro.
+    @ManyToOne
+    @JoinColumn(name = "author_id") // Indica que esta es la clave foránea
+    @JsonBackReference // Indica que esta es la parte "hija" de la relación
+    private Author author;
 
-    @ManyToOne(cascade = CascadeType.ALL) // Define una relación de muchos a uno con la entidad Author.
-    @JoinColumn(name = "author_id") // Especifica el nombre de la columna de la clave foránea en la base de datos.
-    private Author author; // Autor del libro.
-
-    // Constructor vacío requerido por JPA.
-    public Book() {}
-
-    // Constructor con parámetros.
-    public Book(String title, String language, int downloadCount, Author author) {
-        this.title = title; // Asigna el título.
-        this.language = language; // Asigna el idioma.
-        this.downloadCount = downloadCount; // Asigna la cantidad de descargas.
-        this.author = author; // Asigna el autor.
-    }
-
-    // Getters y setters para acceder y modificar los atributos.
+    // Getters y Setters
     public Long getId() {
         return id;
     }

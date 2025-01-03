@@ -1,12 +1,14 @@
-package com.aluracursos.desafio.LiteraluraX.repository; // Especifica el paquete donde está la interfaz.
+package com.aluracursos.desafio.LiteraluraX.repository; // Declaración del paquete.
 
-import com.aluracursos.desafio.LiteraluraX.model.Author; // Importa el modelo Author.
+import com.aluracursos.desafio.LiteraluraX.model.Author; // Importa la clase Author.
 import org.springframework.data.jpa.repository.JpaRepository; // Importa JpaRepository.
+import org.springframework.stereotype.Repository; // Importa la anotación Repository.
 
-import java.util.List; // Importa List.
+import java.util.Optional; // Importa Optional para métodos específicos.
 
-public interface AuthorRepository extends JpaRepository<Author, Long> { // Extiende JpaRepository para manejar la entidad Author.
+@Repository // Marca esta interfaz como un componente manejado por Spring.
+public interface AuthorRepository extends JpaRepository<Author, Long> { // Extiende JpaRepository.
 
-
-    List<Author> findByBirthYearLessThanEqualAndDeathYearGreaterThanEqual(int year1, int year2);
+    // Método personalizado para buscar un autor por su nombre.
+    Optional<Author> findByName(String name);
 }

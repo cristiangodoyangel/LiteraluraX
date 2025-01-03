@@ -1,40 +1,27 @@
 package com.aluracursos.desafio.LiteraluraX.controller;
 
-import com.aluracursos.desafio.LiteraluraX.model.Book;
 import com.aluracursos.desafio.LiteraluraX.service.BookService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/books")
 public class BookController {
 
-    private final BookService bookService;
+    @Autowired
+    private BookService bookService;
 
-    // Constructor para inyectar el servicio
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
-
-    /**
-     * Endpoint para obtener todos los libros.
-     *
-     * @return Lista de libros.
-     */
-    @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks(); // Llama al servicio
-    }
-
-    /**
-     * Endpoint para guardar un libro.
-     *
-     * @param book Objeto Book enviado en el cuerpo de la solicitud.
-     * @return Libro guardado.
-     */
-    @PostMapping
-    public Book saveBook(@RequestBody Book book) {
-        return bookService.saveBook(book); // Llama al servicio
+    @GetMapping("/sync-books")
+    public ResponseEntity<?> syncBooks(@RequestParam String query) {
+        try {
+            bookService.fetchAndSaveBooks(query);
+            return ResponseEntity.ok("Books synchronized successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error synchronizing books: " + e.getMessage());
+        }
     }
 }
