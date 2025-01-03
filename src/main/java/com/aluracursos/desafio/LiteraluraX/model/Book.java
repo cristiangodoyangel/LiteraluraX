@@ -1,28 +1,30 @@
 package com.aluracursos.desafio.LiteraluraX.model;
 
+import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.*;
-
-@Entity
+@Entity // Marca esta clase como una entidad de JPA.
 public class Book {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Define la clave primaria.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática del ID.
     private Long id;
 
-    private String title;
-    private String language;
+    private String title; // Título del libro.
 
-    @Column(name = "download_count")
-    private int downloadCount;
+    private String language; // Idioma del libro.
 
-    @ManyToOne
-    @JoinColumn(name = "author_id") // Indica que esta es la clave foránea
-    @JsonBackReference // Indica que esta es la parte "hija" de la relación
+    private Integer downloadCount; // Número de descargas.
+
+    @Transient // Indica que no se persistirá en la base de datos.
+    private String authorName; // Nombre del autor, usado solo temporalmente.
+
+    @ManyToOne // Relación muchos a uno con la entidad Author.
+    @JsonBackReference // Evita ciclos de referencia en JSON.
     private Author author;
 
-    // Getters y Setters
+    // Getters y setters
+
     public Long getId() {
         return id;
     }
@@ -47,12 +49,20 @@ public class Book {
         this.language = language;
     }
 
-    public int getDownloadCount() {
+    public Integer getDownloadCount() {
         return downloadCount;
     }
 
-    public void setDownloadCount(int downloadCount) {
+    public void setDownloadCount(Integer downloadCount) {
         this.downloadCount = downloadCount;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public Author getAuthor() {

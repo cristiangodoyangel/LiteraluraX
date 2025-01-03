@@ -2,6 +2,7 @@ package com.aluracursos.desafio.LiteraluraX.repository; // Especifica el paquete
 
 import com.aluracursos.desafio.LiteraluraX.model.Book; // Importa el modelo Book.
 import org.springframework.data.jpa.repository.JpaRepository; // Importa JpaRepository.
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List; // Importa List.
 
@@ -12,4 +13,10 @@ public interface BookRepository extends JpaRepository<Book, Long> { // Extiende 
 
     // Método personalizado para buscar los libros más descargados.
     List<Book> findTop10ByOrderByDownloadCountDesc();
+
+    @Query("SELECT DISTINCT b.language FROM Book b")
+    List<String> findDistinctLanguages();
+
+    boolean existsByTitleAndAuthor_Name(String title, String authorName);
+
 }
