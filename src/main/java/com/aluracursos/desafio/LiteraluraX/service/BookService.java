@@ -60,4 +60,21 @@ public class BookService {
         return bookRepository.findByTitleContainingIgnoreCase(title);
     }
 
+    public List<Book> getBooksByLanguage(String language) {
+        return bookRepository.findByLanguage(language);
+    }
+
+    public List<Book> getTopDownloadedBooks() {
+        return bookRepository.findTop10ByOrderByDownloadCountDesc();
+    }
+
+    public long countBooksByLanguage(String language) {
+        return bookRepository.countByLanguage(language);
+    }
+
+    public List<String> getAllLanguages() {
+        return bookRepository.findDistinctLanguages();
+    }
+
+
 }

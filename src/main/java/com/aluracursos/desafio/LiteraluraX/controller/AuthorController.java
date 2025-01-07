@@ -46,5 +46,17 @@ public class AuthorController {
         return authorService.getAuthorsAliveInYear(year);
     }
 
+    @GetMapping("/search")
+    public Author findAuthorByName(@RequestParam String name) {
+        return authorService.getAuthorByName(name)
+                .orElseThrow(() -> new RuntimeException("Author not found"));
+    }
+
+    @GetMapping("/alive-in-range")
+    public List<Author> listAuthorsAliveInRange(@RequestParam int startYear, @RequestParam int endYear) {
+        return authorService.getAuthorsAliveBetweenYears(startYear, endYear);
+    }
+
+
 
 }

@@ -50,4 +50,25 @@ public class BookController {
         return bookService.findBooksByTitle(title);
     }
 
+    @GetMapping("/by-language")
+    public List<Book> listBooksByLanguage(@RequestParam String language) {
+        return bookService.getBooksByLanguage(language);
+    }
+
+    @GetMapping("/top-downloaded")
+    public List<Book> getTopDownloadedBooks() {
+        return bookService.getTopDownloadedBooks();
+    }
+
+    @GetMapping("/count-by-language")
+    public long countBooksByLanguage(@RequestParam String language) {
+        return bookService.countBooksByLanguage(language);
+    }
+
+    @GetMapping("/languages")
+    public List<String> getAllLanguages() {
+        return bookService.getAllLanguages();
+    }
+
+
 }

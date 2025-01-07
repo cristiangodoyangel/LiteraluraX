@@ -50,5 +50,14 @@ public class AuthorService {
             return authorRepository.findAuthorsAliveInYear(year);
         }
 
+    public Optional<Author> getAuthorByName(String name) {
+        return authorRepository.findByName(name);
+    }
+
+    public List<Author> getAuthorsAliveBetweenYears(int startYear, int endYear) {
+        return authorRepository.findAuthorsAliveBetweenYears(startYear, endYear);
+    }
+
+
 
 }

@@ -18,4 +18,8 @@ public interface AuthorRepository extends JpaRepository<Author, Long> { // Extie
     // Método derivado para listar autores vivos en un año específico
     @Query("SELECT a FROM Author a WHERE a.birthYear <= :year AND (a.deathYear IS NULL OR a.deathYear >= :year)")
     List<Author> findAuthorsAliveInYear(@Param("year") int year);
+
+    @Query("SELECT a FROM Author a WHERE a.birthYear <= :endYear AND (a.deathYear IS NULL OR a.deathYear >= :startYear)")
+    List<Author> findAuthorsAliveBetweenYears(@Param("startYear") int startYear, @Param("endYear") int endYear);
+
 }

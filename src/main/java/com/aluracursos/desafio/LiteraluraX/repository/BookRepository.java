@@ -23,5 +23,9 @@ public interface BookRepository extends JpaRepository<Book, Long> { // Extiende 
     @Query("SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%'))")
     List<Book> findByTitleContainingIgnoreCase(@Param("title") String title);
 
+    long countByLanguage(String language);
+
+
+
 
 }
