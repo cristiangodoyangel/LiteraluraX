@@ -3,6 +3,7 @@ package com.aluracursos.desafio.LiteraluraX.service;
 
 import com.aluracursos.desafio.LiteraluraX.model.Author;
 import com.aluracursos.desafio.LiteraluraX.repository.AuthorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,4 +38,12 @@ public class AuthorService {
     public void deleteAuthorById(Long id) {
         authorRepository.deleteById(id);
     }
+
+
+    // Método para listar autores vivos en un año específico
+        public List<Author> getAuthorsAliveInYear(int year) {
+            return authorRepository.findAuthorsAliveInYear(year);
+        }
+
+
 }

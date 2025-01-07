@@ -2,6 +2,7 @@ package com.aluracursos.desafio.LiteraluraX.controller;
 
 import com.aluracursos.desafio.LiteraluraX.model.Author;
 import com.aluracursos.desafio.LiteraluraX.service.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,4 +38,13 @@ public class AuthorController {
     public Author saveAuthor(@RequestBody Author author) {
         return authorService.saveAuthor(author); // Llama al servicio
     }
+
+
+    // Endpoint para listar autores vivos en un año específico
+    @GetMapping("/alive-in-year")
+    public List<Author> listAuthorsAliveInYear(@RequestParam int year) {
+        return authorService.getAuthorsAliveInYear(year);
+    }
+
+
 }
