@@ -44,4 +44,10 @@ public class BookController {
     public List<Book> listBooks() {
         return bookService.getAllBooks(); // Llama al servicio para obtener todos los libros.
     }
+
+    @GetMapping("/search")
+    public List<Book> searchBooksByTitle(@RequestParam String title) {
+        return bookService.findBooksByTitle(title);
+    }
+
 }
