@@ -14,15 +14,20 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    //Guardar solo si no existe
+    public Author saveAuthor(Author author) {
+        Optional<Author> existingAuthor = authorRepository.findByName(author.getName());
+        if (existingAuthor.isPresent()) {
+            return existingAuthor.get(); // Devuelve el autor existente
+        }
+        return authorRepository.save(author); // Guarda solo si no existe
+    }
+
     // Inyección de dependencia de AuthorRepository a través del constructor
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
-    // Método para guardar un autor en la base de datos
-    public Author saveAuthor(Author author) {
-        return authorRepository.save(author);
-    }
 
     // Método para obtener todos los autores
     public List<Author> getAllAuthors() {

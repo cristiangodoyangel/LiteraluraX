@@ -28,16 +28,17 @@ public class BookService {
         List<Book> books = gutendexApiClient.searchBooks(query);
 
         books.forEach(book -> {
-            // Verifica si el autor del libro está presente
-            if (book.getAuthorName() != null) {
-                // Obtiene o crea el autor
+            if (book.getAuthorName() != null && book.getTitle() != null) {
                 Author author = getOrCreateAuthor(book.getAuthorName());
-                // Asigna el autor al libro
-                book.setAuthor(author);
+
+                if (!bookRepository.existsByTitleAndAuthor_Name(book.getTitle(), author.getName())) {
+                    book.setAuthor(author);
+                    bookRepository.save(book); // Guarda solo si no existe
+                }
             }
-            // Guarda el libro en el repositorio
-            bookRepository.save(book);
         });
+
+
     }
 
     // Método auxiliar para obtener o crear un autor si no existe
